@@ -1,11 +1,16 @@
 package com.serhatacar.flightsearchapi.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Flight {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -17,6 +22,6 @@ public class Flight {
     @JoinColumn(name = "arrival_airport_id")
     private Airport arrivalAirport;
     private LocalDateTime departureDateTime;
-    private LocalDateTime returnDateTime;
+    private LocalDateTime arrivalDateTime;
     private double price;
 }
