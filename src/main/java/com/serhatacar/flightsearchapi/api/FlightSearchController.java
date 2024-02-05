@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/flight")
+@RequestMapping("/api/v1/flight-search")
 public class FlightSearchController {
     private final IFlightSearchService flightSearchService;
     private final IFlightService flightService;
