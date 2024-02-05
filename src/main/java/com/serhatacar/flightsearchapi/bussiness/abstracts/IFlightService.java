@@ -8,9 +8,9 @@ import java.util.List;
 public interface IFlightService {
     List<Flight> getAll();
     Flight getById(int id);
-    Flight add(Flight flight);
-    Flight update(Flight flight);
-    void delete(int id);
+    Flight createFlight(Flight flight);
+    Flight updateFlight(Flight flight);
+    void deleteByID(int id);
     List <Flight> findByDepartureAirportId(Airport airport);
     List <Flight> findByArrivalAirportId(Airport airport);
 }

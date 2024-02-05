@@ -1,6 +1,7 @@
 package com.serhatacar.flightsearchapi.bussiness.concrets;
 
 import com.serhatacar.flightsearchapi.bussiness.abstracts.IAirportService;
+import com.serhatacar.flightsearchapi.dto.request.airport.AirportDTO;
 import com.serhatacar.flightsearchapi.entity.Airport;
 import com.serhatacar.flightsearchapi.entity.Flight;
 import com.serhatacar.flightsearchapi.repository.AirportRepository;
@@ -19,26 +20,27 @@ public class AirportManager implements IAirportService {
 
     @Override
     public List<Airport> getAll() {
-        return null;
+        return airportRepository.findAll();
     }
 
     @Override
-    public Airport getById(int id) {
-        return null;
+    public Airport getById(Long id) {
+        return airportRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Airport add(Airport airport) {
-        return null;
+    public Airport createAirport(Airport airport) {
+        return airportRepository.save(airport);
     }
 
     @Override
-    public Airport update(Airport airport) {
-        return null;
+    public Airport updateAirport(Airport airport) {
+        return airportRepository.save(airport);
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteByID(Long id) {
+        airportRepository.deleteById(id);
 
     }
 
@@ -51,5 +53,29 @@ public class AirportManager implements IAirportService {
     public List<Airport> findByArrivalFlight(Flight flight) {
         return airportRepository.findAirportsByArrivalFlightsContains(flight);
     }
+
+    @Override
+    public AirportDTO mapAirportToAirportDTO(Airport airport) {
+        AirportDTO airportDTO = new AirportDTO();
+        if (airport.getCity() != null) {
+            airportDTO.setCity(airport.getCity());
+        }
+        airportDTO.setId(airport.getId());
+        return airportDTO;
+    }
+
+    @Override
+    public Airport mapAirportDTOToAirport(AirportDTO airportDTO) {
+        Airport airport = new Airport();
+        if (airportDTO.getId() != null&& airportDTO.getId() > 0) {
+           airport = getById(airportDTO.getId());
+        }
+        if (airportDTO.getCity() != null) {
+            airport.setCity(airportDTO.getCity());
+        }
+        return airport;
+    }
+
+
 
 }

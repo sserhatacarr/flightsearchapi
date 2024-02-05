@@ -5,17 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name = "airports")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Airport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int airportID;
+    private Long id;
     private String city;
     @OneToMany(mappedBy = "departureAirport")
 private List<Flight> departureFlights;

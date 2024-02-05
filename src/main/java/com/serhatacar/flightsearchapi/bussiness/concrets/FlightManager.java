@@ -27,17 +27,17 @@ public class FlightManager implements IFlightService {
     }
 
     @Override
-    public Flight add(Flight flight) {
+    public Flight createFlight(Flight flight) {
         return null;
     }
 
     @Override
-    public Flight update(Flight flight) {
+    public Flight updateFlight(Flight flight) {
         return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteByID(int id) {
 
     }
 
