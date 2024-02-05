@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "flights")
@@ -23,7 +22,7 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "arrival_airport_id")
     private Airport arrivalAirport;
-    private OffsetDateTime departureDateTime;
-    private OffsetDateTime arrivalDateTime;
+    private LocalDateTime departureDateTime;
+    private LocalDateTime arrivalDateTime;
     private Double price;
 }

@@ -13,6 +13,7 @@ public interface IAirportService {
     Airport updateAirport(Airport airport);
     void deleteByID(Long id);
     boolean isAirportExist(Airport airport);
+    boolean isCityValid(String city);
     AirportDTO mapAirportToAirportDTO(Airport airport);
     Airport mapAirportDTOToAirport(AirportDTO airportDTO);
 

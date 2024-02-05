@@ -71,4 +71,9 @@ public class AirportManager implements IAirportService {
     public boolean isAirportExist(Airport airport) {
         return airport != null && airport.getId() != null && airportRepository.existsById(airport.getId());
     }
+
+    @Override
+    public boolean isCityValid(String city) {
+        return city != null && !city.trim().isEmpty();
+    }
 }

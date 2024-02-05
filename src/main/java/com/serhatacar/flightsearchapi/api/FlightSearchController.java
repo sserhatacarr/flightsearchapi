@@ -68,7 +68,6 @@ public class FlightSearchController {
                 throw new InvalidDateRangeException("Cannot get flights. Departure date cannot be bigger than return date.");
             }
 
-            //for return flights, departure and arrival city information will be swapped between each other
             List<Flight> returnFlights = flightSearchService.filterFlights(arrivalCity, departureCity, returnDate);
 
             List<FlightResponse> returnFlightResponses = returnFlights.stream()

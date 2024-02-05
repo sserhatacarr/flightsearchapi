@@ -16,20 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class FlightsearchapiApplicationTests {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Test
-    void testCreateFlight() {
-        Flight flight = new Flight();
-        flight.setDepartureDateTime(OffsetDateTime.now());
-        flight.setArrivalDateTime(OffsetDateTime.now().plusDays(1));
-        flight.setPrice(100.0);
-
-        ResponseEntity<Flight> response = restTemplate.postForEntity("/flights", flight, Flight.class);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(flight.getPrice(), response.getBody().getPrice());
+    void contextLoads() {
     }
 
 

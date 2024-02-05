@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Data
@@ -13,8 +14,8 @@ public class FlightRequest {
     private Long id;
     private Long departureAirportId;
     private Long arrivalAirportId;
-    private OffsetDateTime departureDateTime;
-    private OffsetDateTime arrivalDateTime;
+    private LocalDateTime departureDateTime;
+    private LocalDateTime arrivalDateTime;
     private Double price;
 
 

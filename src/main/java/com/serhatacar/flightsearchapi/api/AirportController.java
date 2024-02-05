@@ -1,6 +1,7 @@
 package com.serhatacar.flightsearchapi.api;
 
 import com.serhatacar.flightsearchapi.bussiness.abstracts.IAirportService;
+import com.serhatacar.flightsearchapi.core.exception.AirportNotFoundException;
 import com.serhatacar.flightsearchapi.dto.request.airport.AirportDTO;
 import com.serhatacar.flightsearchapi.entity.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class AirportController {
     public ResponseEntity<AirportDTO> getAirportById(@PathVariable Long id) {
         Airport airport = airportService.getById(id);
         if (airport == null) {
-            throw new IllegalArgumentException("Airport with id " + id + " not found.");
-    }
+            throw new AirportNotFoundException("Airport with id " + id + " not found.");
+        }
         AirportDTO airportDTO = airportService.mapAirportToAirportDTO(airport);
         return new ResponseEntity<>(airportDTO, HttpStatus.OK);
     }
@@ -48,6 +49,10 @@ public class AirportController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AirportDTO> createAirport(@RequestBody AirportDTO airportDTO) {
+        airportDTO.setId(null);
+        if (!airportService.isCityValid(airportDTO.getCity())) {
+            throw new AirportNotFoundException("City is not valid.");
+        }
         Airport airport = airportService.mapAirportDTOToAirport(airportDTO);
         Airport createdAirport = airportService.createAirport(airport);
         AirportDTO createdAirportDTO = airportService.mapAirportToAirportDTO(createdAirport);
@@ -58,6 +63,13 @@ public class AirportController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AirportDTO> updateAirport(@PathVariable Long id, @RequestBody AirportDTO airportDTO) {
+        if (!airportService.isAirportExist(airportService.getById(id))) {
+            throw new AirportNotFoundException("Airport with id " + id + " not found.");
+        }
+        if (!airportService.isCityValid(airportDTO.getCity())) {
+            throw new AirportNotFoundException("City is not valid.");
+        }
+        airportDTO.setId(id);
         Airport airport = airportService.mapAirportDTOToAirport(airportDTO);
         Airport updatedAirport = airportService.updateAirport(airport);
         AirportDTO updatedAirportDTO = airportService.mapAirportToAirportDTO(updatedAirport);
@@ -67,9 +79,9 @@ public class AirportController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deleteAirport(@PathVariable Long id) {
-    if (!airportService.isAirportExist(airportService.getById(id))) {
-        throw new IllegalArgumentException("Airport with id " + id + " not found.");
-    }
+        if (!airportService.isAirportExist(airportService.getById(id))) {
+            throw new AirportNotFoundException("Airport with id " + id + " not found.");
+        }
         airportService.deleteByID(id);
         return new ResponseEntity<>("Airport with id " + id + " deleted.", HttpStatus.OK);
     }

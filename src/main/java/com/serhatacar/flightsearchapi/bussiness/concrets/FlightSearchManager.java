@@ -16,8 +16,8 @@ import java.util.List;
 @Service
 public class FlightSearchManager implements IFlightSearchService {
 
-    private FlightRepository flightRepository;
-    private AirportRepository airportRepository;
+    private final FlightRepository flightRepository;
+    private final AirportRepository airportRepository;
 
     @Autowired
     public FlightSearchManager(FlightRepository flightRepository, AirportRepository airportRepository){
@@ -40,7 +40,7 @@ public class FlightSearchManager implements IFlightSearchService {
     }
 
     @Override
-    public List<Flight> filterFlights(String departureCity, String arrivalCity, OffsetDateTime departureDate, OffsetDateTime returnDate) {
+    public List<Flight> filterFlights(String departureCity, String arrivalCity, LocalDate departureDate, LocalDate returnDate) {
         return null;
     }
 

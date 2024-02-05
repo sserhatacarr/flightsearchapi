@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +15,8 @@ public class FlightResponse {
     private String departureAirportCity;
     private Long arrivalAirportId;
     private String arrivalAirportCity;
-    private OffsetDateTime departureDateTime;
-    private OffsetDateTime arrivalDateTime;
+    private LocalDateTime departureDateTime;
+    private LocalDateTime arrivalDateTime;
     private Double price;
 
 

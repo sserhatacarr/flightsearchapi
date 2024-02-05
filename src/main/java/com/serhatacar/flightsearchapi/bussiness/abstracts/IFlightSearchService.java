@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IFlightSearchService {
     List<Flight> filterFlights(String departureCity, String arrivalCity, LocalDate departureDate);
-    List<Flight> filterFlights(String departureCity, String arrivalCity, OffsetDateTime departureDate, OffsetDateTime returnDate);
+    List<Flight> filterFlights(String departureCity, String arrivalCity, LocalDate departureDate, LocalDate returnDate);
     boolean isDateRangeValid(LocalDate departureDate, LocalDate returnDate);
     boolean isCityValid(String city);
 }
