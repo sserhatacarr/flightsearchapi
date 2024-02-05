@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AirportRepository extends JpaRepository<Airport, Long> {
-    List<Airport> findAirportsByArrivalFlightsContains(Flight flight);
-    List<Airport> findAirportsByDepartureFlightsContains(Flight flight);
+    List<Airport> findByCity(String city);
 }

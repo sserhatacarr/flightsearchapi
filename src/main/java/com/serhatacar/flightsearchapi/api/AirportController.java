@@ -67,8 +67,11 @@ public class AirportController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deleteAirport(@PathVariable Long id) {
+    if (!airportService.isAirportExist(airportService.getById(id))) {
+        throw new IllegalArgumentException("Airport with id " + id + " not found.");
+    }
         airportService.deleteByID(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Airport with id " + id + " deleted.", HttpStatus.OK);
     }
 
 

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,8 +22,8 @@ class FlightsearchapiApplicationTests {
     @Test
     void testCreateFlight() {
         Flight flight = new Flight();
-        flight.setDepartureDateTime(LocalDateTime.now());
-        flight.setArrivalDateTime(LocalDateTime.now().plusDays(1));
+        flight.setDepartureDateTime(OffsetDateTime.now());
+        flight.setArrivalDateTime(OffsetDateTime.now().plusDays(1));
         flight.setPrice(100.0);
 
         ResponseEntity<Flight> response = restTemplate.postForEntity("/flights", flight, Flight.class);

@@ -1,4 +1,4 @@
-package com.serhatacar.flightsearchapi.dto.response;
+package com.serhatacar.flightsearchapi.dto.request.flight;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +9,10 @@ import java.time.OffsetDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlightResponse {
+public class FlightRequest {
     private Long id;
     private Long departureAirportId;
-    private String departureAirportCity;
     private Long arrivalAirportId;
-    private String arrivalAirportCity;
     private OffsetDateTime departureDateTime;
     private OffsetDateTime arrivalDateTime;
     private Double price;

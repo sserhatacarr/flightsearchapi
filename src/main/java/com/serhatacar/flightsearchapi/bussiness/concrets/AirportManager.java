@@ -44,15 +44,6 @@ public class AirportManager implements IAirportService {
 
     }
 
-    @Override
-    public List<Airport> findByDepartureFlight(Flight flight) {
-        return airportRepository.findAirportsByDepartureFlightsContains(flight);
-    }
-
-    @Override
-    public List<Airport> findByArrivalFlight(Flight flight) {
-        return airportRepository.findAirportsByArrivalFlightsContains(flight);
-    }
 
     @Override
     public AirportDTO mapAirportToAirportDTO(Airport airport) {
@@ -67,8 +58,8 @@ public class AirportManager implements IAirportService {
     @Override
     public Airport mapAirportDTOToAirport(AirportDTO airportDTO) {
         Airport airport = new Airport();
-        if (airportDTO.getId() != null&& airportDTO.getId() > 0) {
-           airport = getById(airportDTO.getId());
+        if (airportDTO.getId() != null && airportDTO.getId() > 0) {
+            airport = getById(airportDTO.getId());
         }
         if (airportDTO.getCity() != null) {
             airport.setCity(airportDTO.getCity());
@@ -76,6 +67,8 @@ public class AirportManager implements IAirportService {
         return airport;
     }
 
-
-
+    @Override
+    public boolean isAirportExist(Airport airport) {
+        return airport != null && airport.getId() != null && airportRepository.existsById(airport.getId());
+    }
 }

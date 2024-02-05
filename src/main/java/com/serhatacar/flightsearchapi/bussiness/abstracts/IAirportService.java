@@ -12,10 +12,9 @@ public interface IAirportService {
     Airport createAirport(Airport airport);
     Airport updateAirport(Airport airport);
     void deleteByID(Long id);
-    List < Airport > findByDepartureFlight(Flight flight);
-    List < Airport > findByArrivalFlight(Flight flight);
-
+    boolean isAirportExist(Airport airport);
     AirportDTO mapAirportToAirportDTO(Airport airport);
     Airport mapAirportDTOToAirport(AirportDTO airportDTO);
+
 
 }
