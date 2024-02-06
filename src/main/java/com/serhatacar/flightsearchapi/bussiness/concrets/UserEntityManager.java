@@ -22,7 +22,7 @@ public class UserEntityManager implements IUserEntityService {
 
     @Override
     public boolean isUserNameValid(String username) {
-        return !username.trim().isEmpty() && !username.contains(" ");
+        return !username.equals("") && !username.trim().isEmpty();
     }
 
     @Override
