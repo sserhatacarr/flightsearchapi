@@ -42,8 +42,19 @@ public class SecurityConfiguration {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/v1/flight-search").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/flight-search").hasAuthority("USER")
 
                         .requestMatchers(HttpMethod.GET, "/api/v1/airports").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/airports/**").hasRole("ADMIN")
@@ -57,7 +68,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/flights/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/flights/**").hasRole("ADMIN")
 
-                        .anyRequest().authenticated()
+
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults());
         return http.build();

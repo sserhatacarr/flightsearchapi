@@ -31,18 +31,6 @@ public class AuthenticationController {
     private PasswordEncoder passwordEncoder;
     private IUserEntityService userEntityService;
     private IRoleEntityService roleEntityService;
-    private JWTGenerator jwtGenerator;
-
-    @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                              IUserEntityService userEntityService, IRoleEntityService roleEntityService,
-                              JWTGenerator jwtGenerator) {
-        this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
-        this.userEntityService = userEntityService;
-        this.roleEntityService = roleEntityService;
-        this.jwtGenerator = jwtGenerator;
-    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UserRequest userRequestDTO){
@@ -56,6 +44,19 @@ public class AuthenticationController {
         String token = jwtGenerator.generateToken(authentication);
 
         return new ResponseEntity<>(new AuthenticationResponse(token), HttpStatus.OK);
+    }
+
+    private JWTGenerator jwtGenerator;
+
+    @Autowired
+    public AuthenticationController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
+                              IUserEntityService userEntityService, IRoleEntityService roleEntityService,
+                              JWTGenerator jwtGenerator) {
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+        this.userEntityService = userEntityService;
+        this.roleEntityService = roleEntityService;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PostMapping("/register")

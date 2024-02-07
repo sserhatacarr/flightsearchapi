@@ -8,6 +8,7 @@ import com.serhatacar.flightsearchapi.core.exception.AirportNotFoundException;
 import com.serhatacar.flightsearchapi.core.exception.InvalidDateRangeException;
 import com.serhatacar.flightsearchapi.core.exception.InvalidFlightDestinationException;
 import com.serhatacar.flightsearchapi.entity.Flight;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/flight-search")
+@SecurityRequirement(name="bearerAuth")
 public class FlightSearchController {
     private final IFlightSearchService flightSearchService;
     private final IFlightService flightService;

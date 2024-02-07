@@ -4,6 +4,7 @@ import com.serhatacar.flightsearchapi.bussiness.abstracts.IAirportService;
 import com.serhatacar.flightsearchapi.core.exception.AirportNotFoundException;
 import com.serhatacar.flightsearchapi.dto.request.airport.AirportDTO;
 import com.serhatacar.flightsearchapi.entity.Airport;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/airports")
+@SecurityRequirement(name="bearerAuth")
 public class AirportController {
     private final IAirportService airportService;
 

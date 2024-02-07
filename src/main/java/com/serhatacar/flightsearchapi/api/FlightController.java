@@ -9,6 +9,8 @@ import com.serhatacar.flightsearchapi.core.exception.InvalidFlightDestinationExc
 import com.serhatacar.flightsearchapi.dto.request.flight.FlightRequest;
 import com.serhatacar.flightsearchapi.dto.response.FlightResponse;
 import com.serhatacar.flightsearchapi.entity.Flight;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/flights")
+@SecurityRequirement(name="bearerAuth")
 
 public class FlightController {
     private final IFlightService flightService;
@@ -28,7 +31,7 @@ public class FlightController {
         this.flightService = flightService;
         this.airportManager = airportManager;
     }
-
+    @Operation
     @GetMapping
     public ResponseEntity<List<FlightResponse>> getAllFlights() {
         List<Flight> flights = flightService.getAll();
