@@ -11,10 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -56,17 +54,17 @@ public class SecurityConfiguration {
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/flight-search").hasAuthority("USER")
 
-                        .requestMatchers(HttpMethod.GET, "/api/v1/airports").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/airports/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/airports").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/airports/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/airports/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/airports").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/airports/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/airports").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/airports/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/airports/**").hasAuthority("ADMIN")
 
-                        .requestMatchers(HttpMethod.GET, "/api/v1/flights").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/flights**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/flights").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/flights/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/flights/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/flights").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/flights**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/flights").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/flights/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/flights/**").hasAuthority("ADMIN")
 
 
                         .anyRequest().permitAll()
@@ -75,13 +73,6 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-/* @Bean
-        public InMemoryUserDetailsManager userDetailsService() {
-            return new InMemoryUserDetailsManager(
-                    User.withDefaultPasswordEncoder().username("user").password("456").roles("USER").build(),
-                    User.withDefaultPasswordEncoder().username("admin").password("123").roles("USER", "ADMIN").build()
-            );
-        }*/
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
