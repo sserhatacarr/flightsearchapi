@@ -4,6 +4,7 @@ import com.serhatacar.flightsearchapi.bussiness.abstracts.IAirportService;
 import com.serhatacar.flightsearchapi.core.exception.AirportNotFoundException;
 import com.serhatacar.flightsearchapi.dto.request.airport.AirportDTO;
 import com.serhatacar.flightsearchapi.entity.Airport;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/airports")
-@SecurityRequirement(name="bearerAuth")
+@SecurityRequirement(name = "bearerAuth")
 public class AirportController {
     private final IAirportService airportService;
 
@@ -24,6 +25,9 @@ public class AirportController {
         this.airportService = airportService;
     }
 
+    @Operation(
+            summary = "Get all airports",
+            description = "Get all airports from the database")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<AirportDTO>> getAllAirports() {
@@ -36,6 +40,9 @@ public class AirportController {
         return new ResponseEntity<>(airportDTOS, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Get airport by id",
+            description = "Get airport from the database by id")
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -47,7 +54,9 @@ public class AirportController {
         AirportDTO airportDTO = airportService.mapAirportToAirportDTO(airport);
         return new ResponseEntity<>(airportDTO, HttpStatus.OK);
     }
-
+    @Operation(
+            summary = "Create a new airport",
+            description = "Create a new airport and add it to the database")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AirportDTO> createAirport(@RequestBody AirportDTO airportDTO) {
@@ -61,7 +70,9 @@ public class AirportController {
         return new ResponseEntity<>(createdAirportDTO, HttpStatus.CREATED);
 
     }
-
+    @Operation(
+            summary = "Update an airport",
+            description = "Update an airport in the database")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AirportDTO> updateAirport(@PathVariable Long id, @RequestBody AirportDTO airportDTO) {
@@ -77,7 +88,9 @@ public class AirportController {
         AirportDTO updatedAirportDTO = airportService.mapAirportToAirportDTO(updatedAirport);
         return new ResponseEntity<>(updatedAirportDTO, HttpStatus.OK);
     }
-
+    @Operation(
+            summary = "Delete an airport",
+            description = "Delete an airport from the database")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deleteAirport(@PathVariable Long id) {

@@ -8,6 +8,7 @@ import com.serhatacar.flightsearchapi.dto.response.AuthenticationResponse;
 import com.serhatacar.flightsearchapi.entity.RoleEntity;
 import com.serhatacar.flightsearchapi.entity.UserEntity;
 import com.serhatacar.flightsearchapi.security.JWTGenerator;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,11 @@ public class AuthenticationController {
     private IUserEntityService userEntityService;
     private IRoleEntityService roleEntityService;
 
+    @Operation(
+            summary = "Login",
+            description = "Login to the system with username and password")
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody UserRequest userRequestDTO){
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody UserRequest userRequestDTO) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userRequestDTO.getUsername(), userRequestDTO.getPassword())
@@ -48,10 +52,11 @@ public class AuthenticationController {
 
     private JWTGenerator jwtGenerator;
 
+
     @Autowired
     public AuthenticationController(AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                              IUserEntityService userEntityService, IRoleEntityService roleEntityService,
-                              JWTGenerator jwtGenerator) {
+                                    IUserEntityService userEntityService, IRoleEntityService roleEntityService,
+                                    JWTGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userEntityService = userEntityService;
@@ -59,14 +64,17 @@ public class AuthenticationController {
         this.jwtGenerator = jwtGenerator;
     }
 
+    @Operation(
+            summary = "Register",
+            description = "Register to the system with username and password")
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRequest userRequest){
+    public ResponseEntity<String> register(@RequestBody UserRequest userRequest) {
 
-        if(userEntityService.isUserExists(userRequest.getUsername())){
+        if (userEntityService.isUserExists(userRequest.getUsername())) {
             throw new UsernameInvalidException("Cannot add user. Username already exists.");
         }
 
-        if(!userEntityService.isUserNameValid(userRequest.getUsername())){
+        if (!userEntityService.isUserNameValid(userRequest.getUsername())) {
             throw new UsernameInvalidException("Cannot register user. Invalid username.");
         }
 

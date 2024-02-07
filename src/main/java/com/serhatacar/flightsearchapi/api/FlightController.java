@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/flights")
-@SecurityRequirement(name="bearerAuth")
+@SecurityRequirement(name = "bearerAuth")
 
 public class FlightController {
     private final IFlightService flightService;
@@ -31,29 +31,13 @@ public class FlightController {
         this.flightService = flightService;
         this.airportManager = airportManager;
     }
-    @Operation
-    @GetMapping
-    public ResponseEntity<List<FlightResponse>> getAllFlights() {
-        List<Flight> flights = flightService.getAll();
 
-        List<FlightResponse> flightResponses = flights.stream()
-                .map(flightService::mapFlightToFlightResponse)
-                .toList();
-
-        return new ResponseEntity<>(flightResponses, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-public ResponseEntity<FlightResponse> getFlightById(@PathVariable Long id) {
-    Flight flight = flightService.getById(id);
-    if (flight == null) {
-        throw new FlightNotFoundException("No flight found with the provided id: " + id);
-    }
-    FlightResponse flightResponse = flightService.mapFlightToFlightResponse(flight);
-    return new ResponseEntity<>(flightResponse, HttpStatus.OK);
-}
-
+    @Operation(
+            summary = "Create a new flight",
+            description = "Create a new flight and add it to the database")
     @PostMapping
+
+
     public ResponseEntity<FlightResponse> createFlight(@RequestBody FlightRequest flightRequest) {
         flightRequest.setId(null);
 
@@ -82,7 +66,40 @@ public ResponseEntity<FlightResponse> getFlightById(@PathVariable Long id) {
         return new ResponseEntity<>(flightResponse, HttpStatus.CREATED);
     }
 
+    @Operation(
+            summary = "Get all flights",
+            description = "Get all flights from the database"
+    )
+    @GetMapping
+    public ResponseEntity<List<FlightResponse>> getAllFlights() {
+        List<Flight> flights = flightService.getAll();
+
+        List<FlightResponse> flightResponses = flights.stream()
+                .map(flightService::mapFlightToFlightResponse)
+                .toList();
+
+        return new ResponseEntity<>(flightResponses, HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "Get flight by id",
+            description = "Get flight from the database by id")
+    @GetMapping("/{id}")
+    public ResponseEntity<FlightResponse> getFlightById(@PathVariable Long id) {
+        Flight flight = flightService.getById(id);
+        if (flight == null) {
+            throw new FlightNotFoundException("No flight found with the provided id: " + id);
+        }
+        FlightResponse flightResponse = flightService.mapFlightToFlightResponse(flight);
+        return new ResponseEntity<>(flightResponse, HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "Update a flight",
+            description = "Update a flight in the database"
+    )
     @PutMapping("/{id}")
+
     public ResponseEntity<FlightResponse> updateFlight(@PathVariable Long id, @RequestBody FlightRequest flightRequest) {
         if (flightRequest.getId() == null || !flightService.isFlightExist(flightService.getById(flightRequest.getId()))) {
             throw new RuntimeException("No flight found with the provided id: " + flightRequest.getId());
@@ -105,7 +122,12 @@ public ResponseEntity<FlightResponse> getFlightById(@PathVariable Long id) {
         return new ResponseEntity<>(flightResponse, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Delete a flight",
+            description = "Delete a flight from the database"
+    )
     @DeleteMapping("/{id}")
+
     public ResponseEntity<String> deleteFlight(@PathVariable Long id) {
         if (!flightService.isFlightExist(flightService.getById(id))) {
             throw new RuntimeException("No flight found with the provided id: " + id);

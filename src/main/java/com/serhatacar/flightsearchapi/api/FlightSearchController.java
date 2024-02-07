@@ -8,6 +8,7 @@ import com.serhatacar.flightsearchapi.core.exception.AirportNotFoundException;
 import com.serhatacar.flightsearchapi.core.exception.InvalidDateRangeException;
 import com.serhatacar.flightsearchapi.core.exception.InvalidFlightDestinationException;
 import com.serhatacar.flightsearchapi.entity.Flight;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,10 @@ public class FlightSearchController {
         this.flightSearchService = flightSearchService;
         this.flightService = flightService;
     }
-
+    @Operation (
+            summary = "Get flights with filters",
+            description = "Get flights with filters from the database"
+    )
     @GetMapping
     public ResponseEntity<FlightSearchResponse> getFlightWithFilters(
             @RequestParam(name = "departureCity") String departureCity,
