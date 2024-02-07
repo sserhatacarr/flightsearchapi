@@ -113,7 +113,7 @@ Database create table statements are given as example in /flightsearchapi/Db
 
 ### Flight Search Endpoints and Requests
 (available for admins and users)
-- GET api/v1/search/flights
+- GET api/v1/flights-search
     - ?departureCity=cityName&arrivalCity=cityName&departureDate=yyyy-mm-dd: Retrieve one-way flights according to filters.
     - ?departureCity=cityName&arrivalCity=cityName&departureDate=yyyy-mm-dd&returnDate=yyyy-mm-dd: Retrieve two-way flights according to filters.
 
@@ -144,3 +144,6 @@ After running, the Swagger OpenAPI UI is available [here](http://localhost:8080/
 
 ## Additional Notes
 To try out the endpoints, you can use already registered users (3 admin, 1 user). You can reach their credentials in [Registered Users](/registered-user.txt).
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
